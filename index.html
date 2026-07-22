@@ -1,0 +1,711 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Happy Birthday</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            overflow:hidden;
+            background:#fbf7f8;
+            font-family:Georgia, serif;
+        }
+
+        .page{
+            width:100vw;
+            height:100vh;
+            position:relative;
+            background-image:url("main_page.png");
+            background-size:cover;
+            background-position:center;
+            background-repeat:no-repeat;
+        }
+
+        .candle-btn{
+            position:absolute;
+            top:42%;
+            left:50%;
+            transform:translate(-50%, -50%);
+            width:500px;
+            height:70px;
+            border:2px solid #0b437a;
+            border-radius:40px;
+            background:rgba(255,248,248,0.75);
+            color:#1E90FF;;
+            font-size:21px;
+            letter-spacing:4px;
+            text-transform:uppercase;
+            cursor:pointer;
+            box-shadow:0 8px 18px rgba(164,64,69,0.22);
+        }
+
+        .candle-btn::before{
+            content:"";
+            position:absolute;
+            inset:9px;
+            border:2px dashed #0b437a;
+            border-radius:32px;
+        }
+
+        .candle-btn span{
+            position:relative;
+            z-index:2;
+        }
+
+        .wind{
+            font-size:30px;
+            margin-right:14px;
+        }
+
+        .candle-btn:hover{
+            background:rgba(230,243,243,0.95);
+        }
+
+        .gifts{
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%, -50%);
+            display:none;
+            gap:80px;
+            z-index:10;
+            align-items:center;
+        }
+
+        .gift{
+            width:350px;
+            cursor:pointer;
+            transition:all 0.8s ease;
+            transform-origin:center center;
+        }
+
+        .gift:hover{
+            transform:scale(1.08);
+        }
+#giftHeading{
+    position:absolute;
+    top:7%;
+    left:50%;
+    transform:translateX(-50%);
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-size:50px;
+    color:#000000;
+    text-shadow:2px 2px 8px rgba(0,0,0,0.12);
+    display:none;
+    z-index:20;
+    white-space:nowrap;
+}
+#acceptGiftPage{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    display:none;
+    z-index:20;
+}
+
+#acceptHeading{
+    font-family: Arial, sans-serif;
+    font-size: 48px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 20px;
+
+    transform: perspective(500px) rotateX(12deg);
+}
+
+#acceptSticker{
+    width: 380px;   /* was 280px */
+    display:block;
+    margin:0 auto 25px;
+}
+
+#acceptButtons{
+    display:flex;
+    justify-content:center;
+    gap:25px;
+}
+
+#acceptButtons button,
+#tryAgainBtn{
+    padding:14px 35px;
+    border:none;
+    border-radius:30px;
+    background:#921229;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    transition:0.2s ease;
+}
+
+#acceptButtons button:hover,
+#tryAgainBtn:hover{
+    transform:scale(1.08);
+}
+
+#acceptButtons button:active,
+#tryAgainBtn:active{
+    transform:scale(0.92);
+}
+        /* Side Image */
+#sideImage{
+    position:fixed;
+    left:7%;
+    top:50%;
+    transform:translateY(-50%);
+    width:47vw;
+    max-height:93vh;
+    object-fit:contain;
+    z-index:9999;
+    display:none;
+}
+
+        /* Letter */
+
+         #letterText{
+            position:fixed;
+            top:20%;
+            left:50%;
+            transform:translateX(-50%);
+            width:420px;
+            text-align:center;
+            z-index:10000;
+            opacity:0;
+            pointer-events:none;
+        }
+
+        #letterText h2{
+            font-family:'Great Vibes', cursive;
+            font-size:52px;
+            color:#8b4a4a;
+            white-space:nowrap;
+            margin-bottom:20px;
+        }
+
+        #typedMessage{
+            font-family:'Cormorant Garamond', serif;
+            font-size:18px;
+            line-height:1.1;
+            color:#2f1f1f;
+            white-space:pre-line;
+            width:250px;
+            margin:0 auto;
+            user-select:none;
+           -webkit-user-select:none;
+}
+
+
+        #cardContainer{
+    position:fixed;
+    right:4%;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:10000;
+}
+
+        #cardImage{
+    width: 800px;
+    max-width:70vw;
+    cursor:pointer;
+    transition:0.5s;
+}
+
+#cardImage:hover{
+    transform:scale(1.05);
+}
+#musicSection{
+    position:fixed;
+    left:12%;
+    top:55%;
+    transform:translateY(-50%);
+    z-index:10000;
+}
+
+#musicCard{
+    width:490px;
+    display:block;
+    margin-bottom:25px;
+    margin-top:-15px;
+}
+
+#spotifyCard{
+    width:400px;
+    background:#1f3b73;
+    border-radius:22px;
+    padding:18px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+    margin-left:40px;
+}
+
+#albumCover{
+    width:70px;
+    height:70px;
+    border-radius:12px;
+    object-fit:cover;
+}
+
+#songInfo{
+    flex:1;
+}
+
+#songTitle{
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+}
+
+#artistName{
+    color:#f3d7dd;
+    font-size:14px;
+    margin-top:5px;
+}
+
+#playBtn{
+    width:55px;
+    height:55px;
+    border:none;
+    border-radius:50%;
+    background:white;
+    color:#1f3b73;
+    font-size:24px;
+    cursor:pointer;
+}
+        /* Back Button */
+
+        #backBtn{
+            position:fixed;
+            top:25px;
+            left:25px;
+            padding:12px 24px;
+            border:none;
+            border-radius:30px;
+            background:white;
+            color:#8b4a4a;
+            font-size:20px;
+            font-weight:bold;
+            cursor:pointer;
+            z-index:20000;
+            display:none;
+            box-shadow:0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        #backBtn:hover{
+            transform:scale(1.05);
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="page" id="page">
+
+    <button class="candle-btn" id="candleBtn" onclick="changePage()">
+        <span class="wind">≋</span>
+        <span id="btnText">Blow the Candle</span>
+    </button>
+
+    <!-- Accept Gift Screen -->
+<div id="acceptGiftPage" style="display:none;">
+
+    <h1 id="acceptHeading">PLEASE ACCEPT THE GIFT</h1>
+
+    <img src="sticker1.png" id="acceptSticker">
+
+    <div id="acceptButtons">
+        <button onclick="acceptGift()">YES</button>
+        <button onclick="rejectGift()">NO</button>
+    </div>
+
+</div>
+    <h1 id="giftHeading">Choose Your Gifts </h1>
+    <div class="gifts" id="giftsContainer">
+
+        <img
+            src="gift11.png"
+            class="gift"
+            id="gift1"
+            onclick="expandGift1()"
+        >
+
+        <img
+    src="gift22.png"
+    class="gift"
+    id="gift2"
+    onclick="expandGift2()"
+>
+
+        <img
+    src="gift333.png"
+    class="gift"
+    id="gift3"
+    onclick="expandGift3()"
+>
+
+    </div>
+
+<div id="cardContainer" style="display:none;">
+    <img id="cardImage" src="close_card.png" onclick="openCard()">
+</div>
+
+<!-- MUSIC SECTION -->
+<div id="musicSection" style="display:none;">
+
+    <img src="music_card.png" id="musicCard">
+
+    <div id="spotifyCard">
+
+        <img src="album_cover.png" id="albumCover">
+
+        <div id="songInfo">
+            <div id="songTitle"> I Think They Call This Love </div>
+            <div id="artistName">Matthew Ifield</div>
+        </div>
+
+        <button id="playBtn" onclick="toggleMusic()">▶</button>
+
+    </div>
+
+    <audio id="birthdaySong">
+        <source src="love.mp3" type="audio/mpeg">
+    </audio>
+
+</div>
+
+<img id="sideImage" src="imggg.png">
+
+    <button id="backBtn" onclick="goBack()">← Back</button>
+
+    <div id="letterText">
+        <h2>Happy Birthday</h2>
+        <div id="typedMessage"></div>
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+
+<script>
+const birthdayMessage =
+`Wishing you a day filled with
+love, laughter and happiness.
+
+Thank you for making every
+moment special and beautiful.
+
+May all your dreams come true.
+Love You Forever 💖`;
+
+function launchConfetti(){
+
+    var duration = 3000;
+    var end = Date.now() + duration;
+
+    (function frame() {
+
+        confetti({
+            particleCount: 5,
+            angle: 60,
+            spread: 70,
+            origin: { x: 0 }
+        });
+
+        confetti({
+            particleCount: 5,
+            angle: 120,
+            spread: 70,
+            origin: { x: 1 }
+        });
+
+        if (Date.now() < end) {
+            requestAnimationFrame(frame);
+        }
+
+    }());
+}
+
+let stage = 0;
+
+function changePage(){
+
+    const page = document.getElementById("page");
+    const btnText = document.getElementById("btnText");
+    const button = document.getElementById("candleBtn");
+    const gifts = document.getElementById("giftsContainer");
+
+    if(stage === 0){
+
+    launchConfetti();
+
+    page.style.backgroundImage = 'url("next_page.png")';
+    btnText.innerText = "Next";
+    stage = 1;
+
+}
+
+    else if(stage === 1){
+
+    page.style.backgroundImage = 'url("background.png")';
+    button.style.display = "none";
+
+    document.getElementById("acceptGiftPage").style.display = "block";
+
+    stage = 2;
+}
+}
+
+function expandGift1(){
+    document.getElementById("giftHeading").style.display = "none";
+    const gift1 = document.getElementById("gift1");
+    const letterText = document.getElementById("letterText");
+    const backBtn = document.getElementById("backBtn");
+
+    backBtn.style.display = "block";
+
+    document.querySelectorAll(".gift").forEach(gift => {
+
+        if(gift !== gift1){
+            gift.style.display = "none";
+        }
+
+    });
+
+    const rect = gift1.getBoundingClientRect();
+
+    gift1.style.position = "fixed";
+    gift1.style.left = rect.left + "px";
+    gift1.style.top = rect.top + "px";
+    gift1.style.width = rect.width + "px";
+    gift1.style.height = rect.height + "px";
+    gift1.style.margin = "0";
+    gift1.style.zIndex = "9999";
+
+    gift1.offsetHeight;
+
+    gift1.style.left = "50%";
+    gift1.style.top = "50%";
+    gift1.style.transform = "translate(-50%, -50%)";
+    gift1.style.width = "100vw";
+    gift1.style.height = "100vh";
+    gift1.style.objectFit = "contain";
+
+    setTimeout(() => {
+
+        letterText.style.opacity = "1";
+
+        const target = document.getElementById("typedMessage");
+        target.innerHTML = "";
+
+        let i = 0;
+
+        function typeWriter(){
+
+            if(i < birthdayMessage.length){
+
+                target.innerHTML += birthdayMessage.charAt(i);
+                i++;
+                setTimeout(typeWriter, 35);
+            }
+        }
+
+        typeWriter();
+
+    }, 900);
+}
+function expandGift2(){
+    document.getElementById("giftHeading").style.display = "none";
+    const gift2 = document.getElementById("gift2");
+    const backBtn = document.getElementById("backBtn");
+    const sideImage = document.getElementById("sideImage");
+
+    backBtn.style.display = "block";
+
+    document.getElementById("letterText").style.opacity = "0";
+    document.getElementById("typedMessage").innerHTML = "";
+
+    document.querySelectorAll(".gift").forEach(gift => {
+
+        if(gift !== gift2){
+            gift.style.display = "none";
+        }
+
+    });
+
+    gift2.style.position = "fixed";
+    gift2.style.zIndex = "9999";
+
+    /* Gift on left */
+    gift2.style.left = "-10vw";
+    gift2.style.top = "50%";
+    gift2.style.transform = "translateY(-50%)";
+    gift2.style.width = "75vw";
+    gift2.style.height = "100vh";
+    gift2.style.objectFit = "contain";
+
+    /* Show image on right */
+    sideImage.style.display = "block";
+}
+function expandGift3(){
+    document.getElementById("giftHeading").style.display = "none";
+    const gift3 = document.getElementById("gift3");
+    const backBtn = document.getElementById("backBtn");
+    const page = document.getElementById("page");
+    const cardContainer = document.getElementById("cardContainer");
+
+    backBtn.style.display = "block";
+
+    document.querySelectorAll(".gift").forEach(gift => {
+
+        if(gift !== gift3){
+            gift.style.display = "none";
+        }
+
+    });
+
+    /* Change background */
+    page.style.backgroundImage = 'url("newbg.png")';
+
+    /* Hide gift box */
+    gift3.style.display = "none";
+
+    /* Show card */
+    cardContainer.style.display = "block";
+    document.getElementById("musicSection").style.display = "block";
+}
+
+function openCard(){
+
+    const cardImage = document.getElementById("cardImage");
+
+    cardImage.src = "open_card.png";
+
+    /* Disable further clicks after opening */
+    cardImage.onclick = null;
+}
+function toggleMusic(){
+
+    const song = document.getElementById("birthdaySong");
+    const btn = document.getElementById("playBtn");
+
+    if(song.paused){
+
+        song.play();
+        btn.innerHTML = "❚❚";
+
+    }else{
+
+        song.pause();
+        btn.innerHTML = "▶";
+
+    }
+}
+function goBack(){
+
+    /* Restore gift page background */
+    document.getElementById("page").style.backgroundImage =
+    'url("background.png")';
+
+    /* Hide card section */
+    document.getElementById("cardContainer").style.display = "none";
+
+    /* Reset card */
+    document.getElementById("cardImage").src = "close_card.png";
+    document.getElementById("cardImage").onclick = openCard;
+
+    /* Hide music section */
+    document.getElementById("musicSection").style.display = "none";
+
+    /* Stop music */
+    const song = document.getElementById("loveSong");
+
+    if(song){
+        song.pause();
+        song.currentTime = 0;
+    }
+
+    /* Reset play button */
+    const playBtn = document.getElementById("playBtn");
+
+    if(playBtn){
+        playBtn.innerHTML = "▶";
+    }
+
+    const gifts = document.getElementById("giftsContainer");
+    const letterText = document.getElementById("letterText");
+    const backBtn = document.getElementById("backBtn");
+
+    /* Hide side image from Gift 2 */
+    document.getElementById("sideImage").style.display = "none";
+
+    /* Hide letter from Gift 1 */
+    letterText.style.opacity = "0";
+    document.getElementById("typedMessage").innerHTML = "";
+
+    /* Restore all gifts */
+    document.querySelectorAll(".gift").forEach(gift => {
+
+        gift.removeAttribute("style");
+        gift.className = "gift";
+        gift.style.display = "";
+
+    });
+    document.getElementById("giftHeading").style.display = "block";
+    gifts.style.display = "flex";
+
+    backBtn.style.display = "none";
+}
+function acceptGift(){
+
+    document.getElementById("acceptGiftPage").style.transform =
+    "translate(-50%,-50%) scale(0.9)";
+
+    setTimeout(() => {
+        document.getElementById("acceptGiftPage").style.display = "none";
+        document.getElementById("giftsContainer").style.display = "flex";
+        document.getElementById("giftHeading").style.display = "block";
+    }, 150);
+}
+
+function rejectGift(){
+
+    document.getElementById("acceptHeading").innerText =
+    "WHY DID YOU CLICK NO!";
+
+    document.getElementById("acceptSticker").src = "sad.png";
+
+    document.getElementById("acceptButtons").innerHTML =
+    `<button id="tryAgainBtn" onclick="resetAcceptGift()">TRY AGAIN</button>`;
+}
+
+function resetAcceptGift(){
+
+    document.getElementById("acceptHeading").innerText =
+    "PLEASE ACCEPT THE GIFT";
+
+    document.getElementById("acceptSticker").src = "sticker1.png";
+
+    document.getElementById("acceptButtons").innerHTML =
+    `<button onclick="acceptGift()">YES</button>
+     <button onclick="rejectGift()">NO</button>`;
+}
+</script>
+
+</body>
+</html>
